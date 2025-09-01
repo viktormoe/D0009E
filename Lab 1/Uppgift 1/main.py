@@ -1,11 +1,5 @@
+def kostnad(P, r, a):
+    k = P + (a + 1) * P * r / 2
+    print("Den totala kostnaden efter", a, "år är", int(k), "kr.")
 
-def tot_kos(P, a, r):
-
-    # Totala kostnaden för hela lånet
-    k = P + (a+1) * P * r / 2
-
-    print("Det totala beloppet: ", k)
-
-
-tot_kos()
-
+kostnad(50000, 0.03, 10)
