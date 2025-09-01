@@ -1,1 +1,1 @@
-pint("hello")
+print("hello")
