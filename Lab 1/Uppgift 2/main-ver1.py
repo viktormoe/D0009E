@@ -22,3 +22,6 @@ def recept(antal):
 
 # Hur många ska kakan räcka till
 recept(4)
+
+
+### Funkar inte ###
