@@ -24,7 +24,7 @@ tidblanda(4)
 
 # 2.2 Tid att grädda kakan är 40 minuter plus 2 minuter per person
 def tidgradda(antal):
-    tid = 40 + (2 * antal)
+    tid = 30 + (3 * antal)
     print("\n")
     print("Total tid att grädda kakan är", tid, "minuter")
 
@@ -38,7 +38,7 @@ def sockerkaka(antal):
     recept(antal)
     tidblanda(antal)
     tidgradda(antal)
-    print("Totalt tar det", (10 + 1 * antal) + (40 + 2 * antal), "minuter att baka sockerkakan för", antal, "personer.")
+    print("Totalt tar det", (10 + 1 * antal) + (30 + 3 * antal), "minuter att baka sockerkakan för", antal, "personer.")
 
 sockerkaka(4)
 
