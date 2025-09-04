@@ -28,7 +28,7 @@
 
 print("\n")
 
-# 1 Rekursiv funktion bounce(n)
+# 1 Rekursiv funktion
 print("Deluppgift 1:\n")
 def bounce(n):
     print(n)
@@ -36,11 +36,9 @@ def bounce(n):
         bounce(n - 1)
         print(n)
 
-bounce(4)
-
 print("\n"*2)
 
-# 2 Iterativ funktion bounce2(n)
+# 2 Iterativ funktion
 print("Deluppgift 2:\n")
 def bounce2(n):
     for i in range(n, -1, -1):
@@ -48,6 +46,8 @@ def bounce2(n):
     for i in range(1, n + 1):
         print(i)
 
+
+bounce(4)
 bounce2(4)
 
 print("\n"*2)
