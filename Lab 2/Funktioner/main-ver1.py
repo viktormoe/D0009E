@@ -38,9 +38,7 @@ def bounce(n):
 
 bounce(4)
 
-
 print("\n"*2)
-
 
 # 2 Iterativ funktion bounce2(n)
 print("Deluppgift 2:\n ")
@@ -51,5 +49,14 @@ def bounce2(n):
         print(i)
 
 bounce2(4)
+
+print("\n"*2)
+
+# Testkod för deluppgift 1 och 2
+import d0009e_lab2_bounceTest
+
+print("\n"*2)
+
+
 
 
