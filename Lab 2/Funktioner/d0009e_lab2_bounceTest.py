@@ -24,7 +24,7 @@ def testBounce(bounceFkn, printName, num, correctOutput):
     print("funkar inte!")
     print("Testresultat:")
     print(outString)
-    print("Rätt resultat:")
+    print("Rï¿½tt resultat:")
     print(correctOutput)
 
 ##def testBounce2():
@@ -49,7 +49,7 @@ def testBounce(bounceFkn, printName, num, correctOutput):
 ##    print("Bounce2 funkar!")
 ##  else:
 ##    print("   Testresultat: ",outString)
-##    print("   Rätt resultat: ",bounceOutput)
+##    print("   Rï¿½tt resultat: ",bounceOutput)
 
 def suitTestBounce(fkn, printName):
     testBounce(fkn, printName, 5, "5\n4\n3\n2\n1\n0\n1\n2\n3\n4\n5\n")

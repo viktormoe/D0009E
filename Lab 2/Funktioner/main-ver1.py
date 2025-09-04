@@ -26,7 +26,7 @@
 # lösningen enkel, i annat fall har man fått ett nytt tal vars tvärsumma är en del av det sökta svaret.
 # Skriv en funktion, tvarsumman2, som utför samma sak som funktionen i uppgift 3, men inte är rekursiv utan iterativ.
 
-
+print("\n")
 
 # 1 Rekursiv funktion bounce(n)
 print("Deluppgift 1:\n")
