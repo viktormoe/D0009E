@@ -14,16 +14,14 @@ def recept(antal):
 
 # 2.1 Tid att blanda ingredienserna är 10 minuter plus 1 minuter per person
 def tidblanda(antal):
-    tid = 10 + (1 * antal)
-    print("\n")
-    print("Total tid att baka kakan är", tid, "minuter")
+    tid1 = 10 + (1 * antal)
+    return tid1
 
 
 # 2.2 Tid att grädda kakan är 40 minuter plus 2 minuter per person
 def tidgradda(antal):
-    tid = 40 + (2 * antal)
-    print("\n")
-    print("Total tid att grädda kakan är", tid, "minuter")
+    tid2 = 30 + (3 * antal)
+    return tid2
 
 
 # 3 Sammanlagd tid att baka kakan
@@ -31,13 +29,10 @@ def sockerkaka(antal):
     print("\n")
     print("Det är", antal, "personer som ska äta sockerkakan.\n")
     recept(antal)
-    tidblanda(antal)
-    tidgradda(antal)
-    print("\nTotalt tar det", (10 + 1 * antal) + (40 + 2 * antal), "minuter att baka sockerkakan för", antal, "personer.")
+    print("\nTotalt tar det", tidblanda(antal) + tidgradda(antal), "minuter att baka sockerkakan för", antal, "personer.")
 
 
 # Huvudprogram (script) som skriver ut recept för 4 och 7 personer
-
 print("-"*45)
 
 sockerkaka(4)
