@@ -29,7 +29,7 @@
 
 
 # 1 Rekursiv funktion bounce(n)
-print("Deluppgift 1:\n ")
+print("Deluppgift 1:\n")
 def bounce(n):
     print(n)
     if n > 0:
@@ -41,7 +41,7 @@ bounce(4)
 print("\n"*2)
 
 # 2 Iterativ funktion bounce2(n)
-print("Deluppgift 2:\n ")
+print("Deluppgift 2:\n")
 def bounce2(n):
     for i in range(n, -1, -1):
         print(i)
