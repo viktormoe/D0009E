@@ -39,7 +39,6 @@ def bounce(n):
 bounce(4)
 
 
-
 print("\n"*2)
 
 # 2 Iterativ funktion
@@ -68,6 +67,5 @@ def tvarsumman(n):
     else:
         return n % 10 + tvarsumman(n // 10)
     
-tvar
 
 
