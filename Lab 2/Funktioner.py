@@ -66,6 +66,29 @@ def tvarsumman(n):
         return n
     else:
         return n % 10 + tvarsumman(n // 10)
-    
+
+print(tvarsumman(123456789))
+
+print("\n"*2)
+
+
+# 4 Tvärsumman iterativt
+print("Deluppgift 4:\n")
+def tvarsumman2(n):
+    summa = 0
+    while n > 0:
+        summa += n % 10
+        n //= 10
+    return summa
+
+print(tvarsumman2(123456789))
+
+print("\n"*2)
+import d0009e_lab2_sumTest
+
+print("\n"*2)
+
+
+
 
 
