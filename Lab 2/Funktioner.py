@@ -67,7 +67,7 @@ def tvarsumman(n):
     else:
         return n % 10 + tvarsumman(n // 10)
 
-print(tvarsumman(123456789))
+print(tvarsumman(12345))
 
 print("\n"*2)
 
