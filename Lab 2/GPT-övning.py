@@ -69,19 +69,15 @@ def NollTillN2(n):
 NollTillN2(5)
 
 
-#2a
-print("\n\n\n2a")
 
-# Iteration
-def RaknaIhop1(n):
-    summa = 0
-    for i in range(1, n+1):
-        summa += i
-    print(summa)
+print("\nTest1")
 
 
+def bounce5(n):
+    if (n > 0):
+        print(n)
+        bounce5(n-1)
+    if (n < )
 
-RaknaIhop1()
 
-
-
+bounce5(5)
