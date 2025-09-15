@@ -49,3 +49,35 @@ Denna ekvation har den egenskapen att den inte kan lösas analytiskt (prova gär
 import math
 
 # Deluppgift 5a
+
+def derivative(f, x, h):
+    """Approximate the first derivative of f at x using central difference.
+
+    Uses the symmetric difference quotient: (f(x+h) - f(x-h)) / (2*h).
+    """
+    return float((f(x + h) - f(x - h)) / (2 * h))
+
+
+# Deluppgift 5b
+def solve(f, x0, h):
+    """Find a root of f using Newton-Raphson with numeric derivative.
+
+    - f: function whose root is sought
+    - x0: initial guess
+    - h: tolerance (also step for derivative)
+    Returns an approximation x such that successive updates differ by < h.
+    Terminates if the update no longer changes x (stagnation) or derivative is 0.
+    """
+    x = float(x0)
+    max_iter = 100000  # safety guard to avoid infinite loops in pathological cases
+    for _ in range(max_iter):
+        d = derivative(f, x, h)
+        if d == 0.0:
+            return x
+        x_next = x - f(x) / d
+        # Stop if update is smaller than tolerance, or stagnates
+        if x_next == x or abs(x_next - x) < h:
+            return float(x_next)
+        x = x_next
+    return float(x)
+

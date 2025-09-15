@@ -75,9 +75,7 @@ print("\nTest1")
 
 def bounce5(n):
     if (n > 0):
-        print(n)
         bounce5(n-1)
-    if (n < )
-
+    
 
 bounce5(5)
