@@ -48,36 +48,21 @@ Denna ekvation har den egenskapen att den inte kan lösas analytiskt (prova gär
 
 import math
 
-# Deluppgift 5a
 
+# Villes lösning på uppgift 5a   
 def derivative(f, x, h):
-    """Approximate the first derivative of f at x using central difference.
+    approx = (f(x + h) - f(x - h)) / (2 * h)        # Matematiska formeln för derivata
+    finer = (f(x + h / 2) - f(x - h / 2)) / (h)     # För att få högra noggranhet på formeln kan man halvera med (h/2) i
+                                                    # Täljare och nämnare och kommer då fram till följande uttryck
 
-    Uses the symmetric difference quotient: (f(x+h) - f(x-h)) / (2*h).
-    """
-    return float((f(x + h) - f(x - h)) / (2 * h))
+    if abs(approx - finer) < 1e4:                   # om skillnaden mellan f_approx - f_finer är mindre än toleransen (1e4)
+        return finer                                # return resultatet
+    else:
+        return derivative(f, x, h / 2, 1e4)         # är skillnaden inte mindre körs funktionen igen för att få ett 
+                                                    # finare resultat
 
 
-# Deluppgift 5b
-def solve(f, x0, h):
-    """Find a root of f using Newton-Raphson with numeric derivative.
+# Kör koden med funktionen f = sin, x = pi, och steglängden h = 0.1
+print("sin test:", derivative(math.sin, math.pi, 0.1), "=", math.cos(math.pi))
 
-    - f: function whose root is sought
-    - x0: initial guess
-    - h: tolerance (also step for derivative)
-    Returns an approximation x such that successive updates differ by < h.
-    Terminates if the update no longer changes x (stagnation) or derivative is 0.
-    """
-    x = float(x0)
-    max_iter = 100000  # safety guard to avoid infinite loops in pathological cases
-    for _ in range(max_iter):
-        d = derivative(f, x, h)
-        if d == 0.0:
-            return x
-        x_next = x - f(x) / d
-        # Stop if update is smaller than tolerance, or stagnates
-        if x_next == x or abs(x_next - x) < h:
-            return float(x_next)
-        x = x_next
-    return float(x)
 
