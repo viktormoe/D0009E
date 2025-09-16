@@ -49,6 +49,8 @@ Denna ekvation har den egenskapen att den inte kan lösas analytiskt (prova gär
 import math
 
 
+print("\n")
+
 # Villes lösning på uppgift 5a   
 def derivative(f, x, h):
     approx = (f(x + h) - f(x - h)) / (2 * h)        # Matematiska formeln för derivata
@@ -64,5 +66,32 @@ def derivative(f, x, h):
 
 # Kör koden med funktionen f = sin, x = pi, och steglängden h = 0.1
 print("sin test:", derivative(math.sin, math.pi, 0.1), "=", math.cos(math.pi))
+
+
+print("\n")
+
+
+# 5b
+def solve(f, x0, h):
+    if h <= 0:
+        raise ValueError("h måste vara > 0")
+    x_n = float(x0)
+    eps = 1e-12                      # tolerans för ”nästan noll” derivata
+    max_iter = 10_000                # valfri säkerhet
+
+    for _ in range(max_iter):
+        f_prime = derivative(f, x_n, h)
+        if abs(f_prime) < eps:
+            raise ValueError("Derivatan är (nästan) noll; välj annat startvärde.")
+        x_n1 = x_n - f(x_n) / f_prime
+        if abs(x_n1 - x_n) < h:      # kravet i uppgiften
+            return x_n1
+        x_n = x_n1
+    raise RuntimeError("Konvergerade inte inom max_iter.")
+
+
+print(solve(lambda x: x**2 - 1, 0.5, 1e-6))   # → ~1.0
+print(solve(lambda x: x**2 - 1, -2.0, 1e-6))  # → ~-1.0
+print(solve(lambda x: 2*x - 1, 0.0, 1e-6))    # → ~0.5  (OBS: roten är 0.5, inte 0)
 
 
