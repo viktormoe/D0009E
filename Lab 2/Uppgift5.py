@@ -66,26 +66,20 @@ print("\n5b:")
 
 # 5b
 def solve(f, x0, h):
-    x_n = x0                                     
-    while True:                                  
-        f_prime = derivative(f, x_n, h)          
-        if f_prime == 0:                          
-            print("Derivatan är 0. Välj ett annat startvärde.")
+    x = x0
+    while True:
+        d = derivative(f, x, h)      # från uppgift 5a
+        if d == 0:                   # undvik division med 0 (minsta möjliga check)
             return None
-        x_n1 = x_n - f(x_n) / f_prime            
-        if abs(x_n1 - x_n) < h:                   
-            return x_n1
-        x_n = x_n1                                
+        x_new = x - f(x) / d         # Newton–Raphson
+        if abs(x_new - x) < h:       # stoppvillkor enligt instruktionen
+            return x_new
+        x = x_new
 
-# Testfunktioner för solve
-def f1(x):
-    return x**2 - 1
-
-def f2(x):
-    return 2*x - 1
-
-def f3(x):
-    return math.cos(x) - x
+# Testfall enligt uppgiften
+def f1(x): return x**2 - 1
+def f2(x): return 2*x - 1
+def f3(x): return math.cos(x) - x
 
 print("solve x^2-1=0, start=2:", solve(f1, 2, 1e-6))
 print("solve 2x-1=0, start=0:", solve(f2, 0, 1e-6))
