@@ -52,13 +52,13 @@ import math
 print("\n5a:")
 
 # 5a   
-def derivative(f, x, h):
+def derivata(f, x, h):
     approx = (f(x + h) - f(x - h)) / (2 * h)        # Matematiska formeln för derivata
                                                  
     return approx
 
 # Kör koden med funktionen f = sin, x = pi, och steglängden h = 0.001
-print("sin test:", derivative(math.sin, math.pi, 0.001), "=", math.cos(math.pi))
+print("sin test:", derivata(math.sin, math.pi, 0.001), "=", math.cos(math.pi))
 
 
 print("\n5b:")
@@ -68,18 +68,21 @@ print("\n5b:")
 def solve(f, x0, h):
     x = x0
     while True:
-        d = derivative(f, x, h)      # från uppgift 5a
-        if d == 0:                   # undvik division med 0 (minsta möjliga check)
+        d = derivata(f, x, h)      
+        if d == 0:                   
             return None
-        x_new = x - f(x) / d         # Newton–Raphson
-        if abs(x_new - x) < h:       # stoppvillkor enligt instruktionen
+        x_new = x - f(x) / d         
+        if abs(x_new - x) < h:       
             return x_new
         x = x_new
 
-# Testfall enligt uppgiften
-def f1(x): return x**2 - 1
-def f2(x): return 2*x - 1
-def f3(x): return math.cos(x) - x
+# Test
+def f1(x): 
+    return x**2 - 1
+def f2(x): 
+    return 2*x - 1
+def f3(x): 
+    return math.cos(x) - x
 
 print("solve x^2-1=0, start=2:", solve(f1, 2, 1e-6))
 print("solve 2x-1=0, start=0:", solve(f2, 0, 1e-6))
