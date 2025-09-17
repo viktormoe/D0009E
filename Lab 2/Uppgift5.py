@@ -49,49 +49,47 @@ Denna ekvation har den egenskapen att den inte kan lösas analytiskt (prova gär
 import math
 
 
-print("\n")
+print("\n5a:")
 
-# Villes lösning på uppgift 5a   
+# 5a   
 def derivative(f, x, h):
     approx = (f(x + h) - f(x - h)) / (2 * h)        # Matematiska formeln för derivata
-    finer = (f(x + h / 2) - f(x - h / 2)) / (h)     # För att få högra noggranhet på formeln kan man halvera med (h/2) i
-                                                    # Täljare och nämnare och kommer då fram till följande uttryck
+                                                 
+    return approx
 
-    if abs(approx - finer) < 1e4:                   # om skillnaden mellan f_approx - f_finer är mindre än toleransen (1e4)
-        return finer                                # return resultatet
-    else:
-        return derivative(f, x, h / 2, 1e4)         # är skillnaden inte mindre körs funktionen igen för att få ett 
-                                                    # finare resultat
+# Kör koden med funktionen f = sin, x = pi, och steglängden h = 0.001
+print("sin test:", derivative(math.sin, math.pi, 0.001), "=", math.cos(math.pi))
 
 
-# Kör koden med funktionen f = sin, x = pi, och steglängden h = 0.1
-print("sin test:", derivative(math.sin, math.pi, 0.1), "=", math.cos(math.pi))
-
-
-print("\n")
+print("\n5b:")
 
 
 # 5b
 def solve(f, x0, h):
-    if h <= 0:
-        raise ValueError("h måste vara > 0")
-    x_n = float(x0)
-    eps = 1e-12                      # tolerans för ”nästan noll” derivata
-    max_iter = 10_000                # valfri säkerhet
-
-    for _ in range(max_iter):
-        f_prime = derivative(f, x_n, h)
-        if abs(f_prime) < eps:
-            raise ValueError("Derivatan är (nästan) noll; välj annat startvärde.")
-        x_n1 = x_n - f(x_n) / f_prime
-        if abs(x_n1 - x_n) < h:      # kravet i uppgiften
+    x_n = x0                                     
+    while True:                                  
+        f_prime = derivative(f, x_n, h)          
+        if f_prime == 0:                          
+            print("Derivatan är 0. Välj ett annat startvärde.")
+            return None
+        x_n1 = x_n - f(x_n) / f_prime            
+        if abs(x_n1 - x_n) < h:                   
             return x_n1
-        x_n = x_n1
-    raise RuntimeError("Konvergerade inte inom max_iter.")
+        x_n = x_n1                                
 
+# Testfunktioner för solve
+def f1(x):
+    return x**2 - 1
 
-print(solve(lambda x: x**2 - 1, 0.5, 1e-6))   # → ~1.0
-print(solve(lambda x: x**2 - 1, -2.0, 1e-6))  # → ~-1.0
-print(solve(lambda x: 2*x - 1, 0.0, 1e-6))    # → ~0.5  (OBS: roten är 0.5, inte 0)
+def f2(x):
+    return 2*x - 1
+
+def f3(x):
+    return math.cos(x) - x
+
+print("solve x^2-1=0, start=2:", solve(f1, 2, 1e-6))
+print("solve 2x-1=0, start=0:", solve(f2, 0, 1e-6))
+print("solve cos(x)-x=0, start=1:", solve(f3, 1, 1e-6))
+
 
 
