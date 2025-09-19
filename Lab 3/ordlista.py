@@ -41,33 +41,50 @@
 # Frivillig extrauppgift: Lägg till funktionen "delete" i menyerna och implementera den. Funktionen tar bort ord (och beskrivning) från ordlistan.
 
 def menu_disc():
-    
-
-
-
-
-# def menu_dic():
-#     while True:
-#         print("\nMenu for dictionary:")
-#         print("1. Insert")
-#         print("2. Lookup")
-#         print("3. Delete")
-#         print("4. Exit")    
-#         choice = input("Choose an option: ")
-#         print("\n")
+    while True:
+        print("\nMenu for dictionary:")
+        print("1. Insert")
+        print("2. Lookup")
+        print("3. Show all words")
+        print("4. Delete")
+        print("0. Exit")    
+        choice = input("Choose an option: ")
+        print("\n")
         
-#         if choice == "1":
-#             print("")
-#         elif choice == "2":
-#             a = int(input("Enter first number: "))
-#             b = int(input("Enter second number: "))
-#             print("Result:", a + b)
-#         elif choice == "3":
-#             print("What word should we delete?")
-#         elif choice == "4":
-#             print("Goodbye!")
-#             break
-#         else:
-#             print("Invalid choice, try again.")
+        if choice == "1":
+            word = input("Enter the word to insert: ")
+            description = input("Enter the description: ")
+            if word in dictionary:
+                print(f"The word '{word}' already exists in the dictionary.")
+            else:
+                dictionary[word] = description
+                print(f"Word '{word}' inserted successfully.")
+        elif choice == "2":
+            word = input("Enter the word to lookup: ")
+            if word in dictionary:
+                print(f"Description for '{word}': {dictionary[word]}")
+            else:
+                print(f"The word '{word}' does not exist in the dictionary.")
+        elif choice == "3":
+            if dictionary:
+                print("All words in the dictionary:")
+                for word, description in dictionary.items():
+                    print(f"{word}: {description}")
+            else:
+                print("The dictionary is empty.")
+        elif choice == "4":
+            word = input("Enter the word to delete: ")
+            if word in dictionary:
+                del dictionary[word]
+                print(f"Word '{word}' deleted successfully.")
+            else:
+                print(f"The word '{word}' does not exist in the dictionary.")
+        elif choice == "0":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice, try again.")
 
-# menu_dic()
+
+dictionary = {}
+menu_disc()
