@@ -81,7 +81,7 @@ def tvarsumman2(n):
         n //= 10
     return summa
 
-print(tvarsumman2(123456789))
+print(tvarsumman2(12345))
 
 print("\n"*2)
 import d0009e_lab2_sumTest

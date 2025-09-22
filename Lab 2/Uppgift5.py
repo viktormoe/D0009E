@@ -53,11 +53,12 @@ print("\n5a:")
 
 # 5a   
 def derivata(f, x, h):
-    approx = (f(x + h) - f(x - h)) / (2 * h)        # Matematiska formeln för derivata
+    approx = (f(x + h) - f(x - h)) / (2 * h)        
                                                  
     return approx
 
-# Kör koden med funktionen f = sin, x = pi, och steglängden h = 0.001
+
+# Kör derivatafunktionen med f = sin, x = pi, och steglängden h = 0.001
 print("sin test:", derivata(math.sin, math.pi, 0.001), "=", math.cos(math.pi))
 
 
