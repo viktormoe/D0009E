@@ -46,7 +46,7 @@ print("Deluppgift 2:\n")
 def bounce2(n):
     for i in range(n, -1, -1):
         print(i)
-    for i in range(1, n + 1):
+    for i in range(1, n + 1, 1):
         print(i)
 
 bounce2(4)
