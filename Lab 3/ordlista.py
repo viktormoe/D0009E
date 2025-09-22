@@ -59,12 +59,14 @@ def menu_disc():
             else:
                 dictionary[word] = description
                 print(f"Word '{word}' inserted successfully.")
+
         elif choice == "2":
             word = input("Enter the word to lookup: ")
             if word in dictionary:
                 print(f"Description for '{word}': {dictionary[word]}")
             else:
                 print(f"The word '{word}' does not exist in the dictionary.")
+
         elif choice == "3":
             if dictionary:
                 print("All words in the dictionary:")
@@ -72,6 +74,7 @@ def menu_disc():
                     print(f"{word}: {description}")
             else:
                 print("The dictionary is empty.")
+
         elif choice == "4":
             word = input("Enter the word to delete: ")
             if word in dictionary:
@@ -79,6 +82,7 @@ def menu_disc():
                 print(f"Word '{word}' deleted successfully.")
             else:
                 print(f"The word '{word}' does not exist in the dictionary.")
+
         elif choice == "0":
             print("Goodbye!")
             break
