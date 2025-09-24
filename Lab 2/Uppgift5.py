@@ -11,7 +11,6 @@ def derivata(f, x, h):
     return approx
 
 
-# Kör derivatafunktionen med f = sin, x = pi, och steglängden h = 0.001
 print("sin test:", derivata(math.sin, math.pi, 0.001), "=", math.cos(math.pi))
 
 
