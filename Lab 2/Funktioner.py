@@ -31,7 +31,6 @@ import d0009e_lab2_bounceTest
 
 print("\n"*2)
 
-
 # 3 Tvärsumma Rekursiv
 print("Deluppgift 3:\n")
 def tvarsumman(n):
@@ -40,7 +39,7 @@ def tvarsumman(n):
     else:
         return n % 10 + tvarsumman(n // 10)
 
-print(tvarsumman(12345))
+print(tvarsumman(1234))
 
 print("\n"*2)
 

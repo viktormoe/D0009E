@@ -16,7 +16,6 @@ print("sin test:", derivata(math.sin, math.pi, 0.001), "=", math.cos(math.pi))
 
 print("\n5b:")
 
-
 # 5b
 def solve(f, x0, h):
     x = x0
@@ -40,6 +39,4 @@ def f3(x):
 print("solve x^2-1=0, start=2:", solve(f1, 2, 1e-6))
 print("solve 2x-1=0, start=0:", solve(f2, 0, 1e-6))
 print("solve cos(x)-x=0, start=1:", solve(f3, 1, 1e-6))
-
-
 
