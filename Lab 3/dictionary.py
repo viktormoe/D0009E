@@ -35,7 +35,7 @@ def delete_word(dictionary):
         print(f"The word '{word}' does not exist in the dictionary.")
 
 
-def menu_disc():
+def menu():
     dictionary = {}
     while True:
         print("\nMenu for dictionary:")
@@ -72,4 +72,4 @@ def menu_disc():
         return True
                     
 
-menu_disc()
+menu()
