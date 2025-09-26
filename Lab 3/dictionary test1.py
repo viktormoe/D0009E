@@ -17,7 +17,7 @@ def delete(dictionary):
     word = input("Vilket ord vill du radera: ")
     del dictionary[word]
     print(f"\nOrdet '{word}' har raderats")
-tvybu
+
 
 
 def menu():
