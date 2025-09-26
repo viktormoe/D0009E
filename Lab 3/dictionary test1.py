@@ -2,30 +2,37 @@ def insert(dictionary):
     word = input("Skriv vilket ord: ")
     description = input("Beskrivning av ordet: ")
     dictionary[word] = description
-    print(f"'{word}' sparades i ordboken")
+    print(f"\n'{word}' sparades i ordboken med beskrivningen '{description}'")
 
 
-#def lookup(dictionary):
+def lookup(dictionary):
+    word = input("Vilket ord vill du kolla upp: ")
+    print(f"\nOrdet '{word}' har beskrivningen: {dictionary[word]}")
 
 
 def menu():
     
-    dictionary = []
+    dictionary = {}
     
     while True:
         
-        print("\n1: Insert\n2: Lookup\n3: Exit\n")
+        print("\n----Meny----\n1: Insert\n2: Lookup\n3: Exit\n")
     
-        choose = int(input("Choose a number: "))
+        choose = input("Choose a number: ")
 
-        if choose == 1:
+        if choose == "1":
             insert(dictionary)
 
-        #elif choose == 2:
-        #    lookup(dictionary)
+        elif choose == "2":
+            lookup(dictionary)
 
-        elif choose == 3:
-            return
+        elif choose == "3":
+            print("Exiting")
+            return False
+
+        else:
+            print("Fel, försök igen med en valbar siffra")
         
+
         
 menu()
