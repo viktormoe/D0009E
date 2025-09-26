@@ -17,14 +17,6 @@ def lookup_word(dictionary):
         print(f"The word '{word}' does not exist in the dictionary.")
 
 
-def show_all_words(dictionary):
-    if dictionary:
-        print("All words in the dictionary:")
-        for word, description in dictionary.items():
-            print(f"{word}: {description}")
-    else:
-        print("The dictionary is empty.")
-
 
 def delete_word(dictionary):
     word = input("Enter the word to delete: ")
@@ -41,8 +33,7 @@ def menu():
         print("\nMenu for dictionary:")
         print("1. Insert")
         print("2. Lookup")
-        print("3. Show all words")
-        print("4. Delete")
+        print("3. Delete")
         print("0. Exit")    
         choice = input("Choose an option: ")
         print("\n")
@@ -57,10 +48,6 @@ def menu():
             continue
 
         elif choice == "3":
-            show_all_words(dictionary)
-            continue
-
-        elif choice == "4":
             delete_word(dictionary)
             continue
 

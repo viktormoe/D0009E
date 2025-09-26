@@ -13,10 +13,17 @@ def lookup(dictionary):
     print(f"\nOrdet '{word}' har beskrivningen: {dictionary[word]}")
 
 
+def delete(dictionary):
+    word = input("Vilket ord vill du radera: ")
+    del dictionary[word]
+    print(f"\nOrdet '{word}' har raderats")
+
+
+
 def menu():
     dictionary = {}
     while True:
-        print("\n----Meny----\n1: Insert\n2: Lookup\n3: Exit\n")
+        print("\n----Meny----\n1: Insert\n2: Lookup\n2.5: Radera\n3: Exit\n")
         choose = input("Choose a number: ")
 
         if choose == "1":
@@ -24,6 +31,9 @@ def menu():
 
         elif choose == "2":
             lookup(dictionary)
+
+        elif choose == "2.5":
+            delete(dictionary)
 
         elif choose == "3":
             print("Hejdå")
