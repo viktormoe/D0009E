@@ -1,8 +1,11 @@
 def insert(dictionary):
     word = input("Skriv vilket ord: ")
-    description = input("Beskrivning av ordet: ")
-    dictionary[word] = description
-    print(f"\n'{word}' sparades i ordboken med beskrivningen '{description}'")
+    if word in dictionary:
+        print(f"Ordet {word} finns redan")
+    else:
+        description = input("Beskrivning av ordet: ")
+        dictionary[word] = description
+        print(f"\n'{word}' sparades i ordboken med beskrivningen '{description}'")
 
 
 def lookup(dictionary):
