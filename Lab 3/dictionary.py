@@ -25,7 +25,7 @@ def delete_word(dictionary):
         print(f"Word '{word}' deleted successfully.")
     else:
         print(f"The word '{word}' does not exist in the dictionary.")
-
+enj
 
 def menu():
     dictionary = {}
