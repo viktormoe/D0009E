@@ -14,13 +14,9 @@ def lookup(dictionary):
 
 
 def menu():
-    
     dictionary = {}
-    
     while True:
-        
         print("\n----Meny----\n1: Insert\n2: Lookup\n3: Exit\n")
-    
         choose = input("Choose a number: ")
 
         if choose == "1":
