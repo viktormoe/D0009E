@@ -37,7 +37,7 @@ def delete_word(dictionary):
 
 
 def menu():
-    dictionary = []   # list of (word, description)
+    dictionary = []
     while True:
         print("\nMenu for dictionary (list of tuples):")
         print("1. Insert")
