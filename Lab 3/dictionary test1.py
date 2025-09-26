@@ -30,7 +30,7 @@ def menu():
             lookup(dictionary)
 
         elif choose == "3":
-            print("Exiting")
+            print("Hejdå")
             return False
 
         else:
