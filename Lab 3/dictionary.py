@@ -40,23 +40,19 @@ def menu():
 
         if choice == "1":
             insert_word(dictionary)
-            continue
 
         elif choice == "2":
             lookup_word(dictionary)
-            continue
 
         elif choice == "3":
             delete_word(dictionary)
-            continue
 
         elif choice == "0":
             print("Goodbye!")
-            return False
-        
+            break
+
         else:
             print("Invalid choice, try again.")
-        return True
                     
 
 menu()
