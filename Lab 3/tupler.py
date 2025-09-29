@@ -17,15 +17,6 @@ def lookup_word(dictionary):
     print(f"The word '{word}' does not exist.")
 
 
-def show_all_words(dictionary):
-    if dictionary:
-        print("All words in the dictionary:")
-        for w, d in dictionary:
-            print(f"{w}: {d}")
-    else:
-        print("The dictionary is empty.")
-
-
 def delete_word(dictionary):
     word = input("Enter the word to delete: ")
     for i, (w, d) in enumerate(dictionary):
