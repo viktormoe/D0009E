@@ -17,7 +17,6 @@ def lookup_word(dictionary):
         print(f"The word '{word}' does not exist in the dictionary.")
 
 
-
 def delete_word(dictionary):
     word = input("Enter the word to delete: ")
     if word in dictionary:
