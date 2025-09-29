@@ -30,7 +30,7 @@ def delete_word(dictionary):
 def menu():
     dictionary = []
     while True:
-        print("\nMenu for dictionary (list of tuples):")
+        print("\nMenu for dictionary:")
         print("1. Insert")
         print("2. Lookup")
         print("3. Delete")

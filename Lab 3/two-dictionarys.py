@@ -34,7 +34,7 @@ def menu():
     words = []
     descriptions = []
     while True:
-        print("\nMenu for dictionary (two lists):")
+        print("\nMenu for dictionary:")
         print("1. Insert")
         print("2. Lookup")
         print("3. Delete")
