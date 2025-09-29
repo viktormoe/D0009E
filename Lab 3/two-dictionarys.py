@@ -42,6 +42,7 @@ def menu():
         choice = input("Choose an option: ")
         print("\n")
 
+
         if choice == "1":
             insert_word(words, descriptions)
 
