@@ -49,7 +49,7 @@ def menu():
 
         elif choice == "0":
             print("Goodbye!")
-            break
+            return
 
         else:
             print("Invalid choice, try again.")
