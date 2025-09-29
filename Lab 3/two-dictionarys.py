@@ -37,23 +37,24 @@ def menu():
         print("\nMenu for dictionary (two lists):")
         print("1. Insert")
         print("2. Lookup")
-        print("3. Show all words")
-        print("4. Delete")
+        print("3. Delete")
         print("0. Exit")    
         choice = input("Choose an option: ")
         print("\n")
 
         if choice == "1":
             insert_word(words, descriptions)
+
         elif choice == "2":
             lookup_word(words, descriptions)
+
         elif choice == "3":
-            show_all_words(words, descriptions)
-        elif choice == "4":
             delete_word(words, descriptions)
+
         elif choice == "0":
             print("Goodbye!")
             return
+        
         else:
             print("Invalid choice, try again.")
 

@@ -54,6 +54,7 @@ def menu():
         elif choice == "0":
             print("Goodbye!")
             return False
+        
         else:
             print("Invalid choice, try again.")
         return True
