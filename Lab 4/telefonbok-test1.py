@@ -1,12 +1,10 @@
 class Board:
-    x = 5
-    g = 6
-    print(x)
-    print(g)
+    name = input()
+
+def main():
+    while True:
+        print(f"telebok>", Board.name)
+        
 
 
-Board
-
-print("\n")
-
-print(Board.x)    
+main()
