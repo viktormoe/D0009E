@@ -19,17 +19,6 @@ def lookup_word(words, descriptions):
         print(f"The word '{word}' does not exist.")
 
 
-def delete_word(words, descriptions):
-    word = input("Enter the word to delete: ")
-    if word in words:
-        index = words.index(word)
-        del words[index]
-        del descriptions[index]
-        print(f"Word '{word}' deleted successfully.")
-    else:
-        print(f"The word '{word}' does not exist.")
-
-
 def menu():
     words = []
     descriptions = []
@@ -37,7 +26,6 @@ def menu():
         print("\nMenu for dictionary:")
         print("1. Insert")
         print("2. Lookup")
-        print("3. Delete")
         print("0. Exit")    
         choice = input("Choose an option: ")
         print("\n")
@@ -48,9 +36,6 @@ def menu():
 
         elif choice == "2":
             lookup_word(words, descriptions)
-
-        elif choice == "3":
-            delete_word(words, descriptions)
 
         elif choice == "0":
             print("Goodbye!")
