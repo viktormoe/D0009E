@@ -10,7 +10,9 @@ def main():
     while True:
         
         print("=== Bulletin board system ===")
-
+        print()
+        print()
+        print("1. ")
 
 
 main()
