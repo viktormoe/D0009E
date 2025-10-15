@@ -1,10 +1,8 @@
 
-from typing import Optional
-
 # En liten klass som håller ett telefonnummer.
 # Om flera namn pekar på samma Entry-objekt fungerar de som alias.
 class Entry:
-    def __init__(self, number: str):
+    def __init__(self, number):
         self.number = number  # telefonnummer lagras som text (sträng)
 
 
@@ -13,14 +11,12 @@ class PhoneBook:
     def __init__(self):
         # Dictionary där varje namn pekar på en Entry (som innehåller numret)
         # Flera namn kan peka på samma Entry → alias.
-        self.names: dict[str, Entry] = {}
+        self.names = {}
 
     # Hjälpfunktion: kolla om ett nummer redan används av någon annan Entry
-    def number_in_use(self, my_entry: Optional[Entry], number: str) -> bool:
-        
+    def number_in_use(self, my_entry, number):
         # Returnerar True om telefonnumret redan används av någon annan Entry.
         # my_entry används för att hoppa över aktuell post vid t.ex. 'change'.
-        
         for entry in self.names.values():
             if entry is not my_entry and entry.number == number:
                 return True
@@ -28,7 +24,7 @@ class PhoneBook:
 
     # Kommandon
 
-    def add(self, name: str, number: str) -> None:
+    def add(self, name, number):
         # Lägg till nytt namn. Fel om namnet finns eller numret redan används.
         if name in self.names:
             print(f"{name} already exists")
@@ -38,14 +34,14 @@ class PhoneBook:
             return
         self.names[name] = Entry(number)
 
-    def lookup(self, name: str) -> None:
+    def lookup(self, name):
         entry = self.names.get(name)
         if entry is None:
             print(f"{name} not found")
         else:
             print(entry.number)
 
-    def alias(self, name: str, newname: str) -> None:
+    def alias(self, name, newname):
         # Skapa alias: låt `newname` peka på samma Entry som `name`.
         entry = self.names.get(name)
         if entry is None or newname in self.names:
@@ -53,7 +49,7 @@ class PhoneBook:
             return
         self.names[newname] = entry  # båda namnen pekar nu på samma Entry/nummer
 
-    def change(self, name: str, number: str) -> None:
+    def change(self, name, number):
         entry = self.names.get(name)
         if entry is None:
             print(f"{name} not found")
@@ -63,27 +59,30 @@ class PhoneBook:
             return
         entry.number = number  # ändra numret, alias följer automatiskt
 
-    def save(self, filename: str) -> None:
+    def save(self, filename):
         # Spara alla namn (även alias) som separata rader: "nummer;namn;".
         try:
             with open(filename, "w", encoding="utf-8") as file:
                 for name, entry in self.names.items():
-                    file.write(f"{entry.number};{name};")
+                    file.write(f"{entry.number};{name};")  # viktigt: radbrytning
         except OSError as err:
             print(f"could not save: {err}")
 
-    def load(self, filename: str) -> None:
+    def load(self, filename):
         # Läs fil och ersätt telefonboken. Varje rad blir en separat Entry (alias försvinner).
         try:
             with open(filename, "r", encoding="utf-8") as file:
                 self.names.clear()
+                line_no = 0
                 for line in file:
+                    line_no += 1
                     line = line.strip()
                     if not line:
                         continue
                     parts = line.split(";")
                     if len(parts) < 2 or not parts[0] or not parts[1]:
-                        # Hoppa över trasiga rader tyst (kan ändras till felmeddelande vid behov)
+                        # Välj: skriv ett enkelt felmeddelande för trasig rad men fortsätt
+                        print(f"bad line {line_no}: {line}")
                         continue
                     number, name = parts[0], parts[1]
                     self.names[name] = Entry(number)
@@ -93,7 +92,7 @@ class PhoneBook:
             print(f"could not load: {err}")
 
     # Denna funktion tar en textinmatning och avgör vilket kommando som ska köras
-    def handle_command(self, line: str) -> bool:
+    def handle_command(self, line):
         line = line.strip()
         if not line:
             return True  # gör inget om raden är tom
@@ -141,8 +140,9 @@ class PhoneBook:
 
 
 # Programloopen – körs tills användaren skriver "quit"
+# Prompten skickas in som parameter (ingen global state)
 
-def repl(prompt: str = "phoneBook> "):
+def repl(prompt = "phoneBook> "):
     book = PhoneBook()
     while True:
         try:
@@ -157,6 +157,7 @@ def repl(prompt: str = "phoneBook> "):
 
 
 def main():
+    # All körning sker via funktioner – bättre struktur och lättare att testa
     repl("phoneBook> ")
 
 
