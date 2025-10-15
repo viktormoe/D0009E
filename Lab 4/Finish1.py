@@ -1,159 +1,170 @@
 #!/usr/bin/env python3
 """
-Telefonbok – kort klassbaserad version med många kommentarer.
-Mål: vara lätt att läsa och förstå, men ändå följa labbkraven.
+Telefonbok – extra enkel och tydligt kommenterad version.
 
-Kommandon (en rad, separerade med valfritt antal whitespace):
+Syfte: visa hur man kan använda dictionary + objekt (klasser) + loopar
+för att skapa ett interaktivt program.
+
+Kommandon:
   add name number      – lägg till nytt namn (namn och nummer måste vara unika)
-  lookup name          – skriv ut numret för ett namn (eller alias)
-  alias name newname   – gör nytt namn som pekar på *samma* nummer som `name`
-  change name number   – byt nummer för ett namn/alias (påverkar alla alias)
-  save filename        – spara "nummer;namn;" per rad (alias sparas som vanliga namn)
-  load filename        – läs fil, ersätt hela telefonboken (aliasrelationer försvinner)
+  lookup name          – visa numret för ett namn eller alias
+  alias name newname   – gör nytt namn som pekar på samma nummer
+  change name number   – byt nummer (påverkar alla alias)
+  save filename        – spara till fil (en rad per namn)
+  load filename        – läs från fil (alias försvinner)
   quit                 – avsluta programmet
 """
 
-PROMPT = "phoneBook> "  # texten som visas innan input – fritt enligt uppgiften
+PROMPT = "phoneBook> "  # texten som visas innan användarens inmatning
 
-# --- Liten klass som håller numret ---
+# En liten klass som håller ett telefonnummer.
+# Om flera namn pekar på samma Entry-objekt fungerar de som alias.
 class Entry:
-    """En post i telefonboken. Håller bara ett telefonnummer.
-    Den är medvetet *muterbar* (fältet kan ändras), så att alias fungerar enkelt:
-    Flera namn kan peka på samma Entry-objekt. Om numret ändras på Entry:n så ser
-    alla namn som pekar hit den nya siffran direkt.
-    """
-    def __init__(self, n: str):
-        self.n = n  # telefonnummer som sträng
+    def __init__(self, number: str):
+        self.number = number  # telefonnummer lagras som text (sträng)
 
 
-# --- Själva telefonboken ---
+# Klassen som sköter själva telefonboken
 class PhoneBook:
     def __init__(self):
-        # `names` mappar *varje* namn (inklusive alias) till en Entry.
-        # Två olika namn kan alltså peka på samma Entry-objekt → det är alias.
+        # Dictionary där varje namn pekar på en Entry (som innehåller numret)
         self.names: dict[str, Entry] = {}
 
-    # Hjälpmetod: kolla om ett nummer redan används av någon ANNAN post
-    def _num_used(self, me: Entry | None, num: str) -> bool:
-        for e in self.names.values():
-            # hoppa över "mig själv" när vi ändrar (so we can keep same number)
-            if e is not me and e.n == num:
+    # Hjälpfunktion som kollar om ett nummer redan används av någon annan
+    def number_in_use(self, my_entry, number: str) -> bool:
+        for entry in self.names.values():
+            if entry is not my_entry and entry.number == number:
                 return True
         return False
 
-    # --- Kommandon ---
-    def add(self, name: str, num: str) -> None:
-        """Lägg till nytt namn med nummer.
-        Fel om namnet finns redan eller om numret redan används.
-        """
+    # Kommandon --------------------------------------------------------
+
+    def add(self, name: str, number: str):
         if name in self.names:
-            print(f"{name} already exists"); return
-        if self._num_used(None, num):
-            print(f"{num} already exists"); return
-        self.names[name] = Entry(num)  # nytt Entry, inget alias ännu
+            print(f"{name} already exists")
+            return
+        if self.number_in_use(None, number):
+            print(f"{number} already exists")
+            return
+        # Skapa en ny Entry (ny person)
+        self.names[name] = Entry(number)
 
-    def lookup(self, name: str) -> None:
-        """Skriv ut numret för `name` eller fel om det inte finns."""
-        e = self.names.get(name)
-        print(e.n if e else f"{name} not found")
+    def lookup(self, name: str):
+        entry = self.names.get(name)
+        if entry is None:
+            print(f"{name} not found")
+        else:
+            print(entry.number)
 
-    def alias(self, name: str, newname: str) -> None:
-        """Skapa alias: låt `newname` peka på samma Entry som `name`.
-        `name` måste finnas och `newname` får inte finnas.
-        """
-        e = self.names.get(name)
-        if e is None or newname in self.names:
-            print("name not found or duplicate name"); return
-        self.names[newname] = e  # pekar på samma Entry → delar nummer
+    def alias(self, name: str, newname: str):
+        # Gör så att newname pekar på samma Entry som name
+        entry = self.names.get(name)
+        if entry is None or newname in self.names:
+            print("name not found or duplicate name")
+            return
+        self.names[newname] = entry  # båda namnen pekar nu på samma nummer
 
-    def change(self, name: str, num: str) -> None:
-        """Ändra numret för ett befintligt namn/alias.
-        Påverkar alla alias, eftersom de delar samma Entry.
-        """
-        e = self.names.get(name)
-        if e is None:
-            print(f"{name} not found"); return
-        if self._num_used(e, num):
-            print(f"{num} already exists"); return
-        e.n = num  # byt själva siffervärdet i Entry-objektet
+    def change(self, name: str, number: str):
+        entry = self.names.get(name)
+        if entry is None:
+            print(f"{name} not found")
+            return
+        if self.number_in_use(entry, number):
+            print(f"{number} already exists")
+            return
+        entry.number = number  # ändra numret, alias följer automatiskt
 
-    def save(self, filename: str) -> None:
-        """Spara en rad per namn i formatet "nummer;namn;".
-        Alias behandlas som vanliga namn (det är tillåtet enligt uppgiften).
-        """
+    def save(self, filename: str):
         try:
-            with open(filename, "w", encoding="utf-8") as f:
-                for k, e in self.names.items():
-                    f.write(f"{e.n};{k};")
+            with open(filename, "w", encoding="utf-8") as file:
+                # Skriv varje namn på en egen rad: nummer;namn;
+                for name, entry in self.names.items():
+                    file.write(f"{entry.number};{name};\n")
         except OSError as err:
             print(f"could not save: {err}")
 
-    def load(self, filename: str) -> None:
-        """Läs in fil och ersätt hela telefonboken.
-        Varje rad skapar ett *eget* Entry – aliasrelationer återskapas inte.
-        """
+    def load(self, filename: str):
         try:
-            with open(filename, "r", encoding="utf-8") as f:
-                self.names.clear()  # kasta allt i minnet först
-                for line in f:
+            with open(filename, "r", encoding="utf-8") as file:
+                # Töm telefonboken först
+                self.names.clear()
+                for line in file:
                     line = line.strip()
-                    if not line: 
+                    if not line:
                         continue
-                    parts = line.split(";")  # förväntar oss: nummer;namn;
+                    parts = line.split(";")
                     if len(parts) < 2 or not parts[0] or not parts[1]:
-                        # hoppa över trasiga rader tyst
                         continue
-                    num, name = parts[0], parts[1]
-                    self.names[name] = Entry(num)  # nytt separat Entry → inget alias
+                    number, name = parts[0], parts[1]
+                    # Skapa nytt Entry för varje namn (alias försvinner)
+                    self.names[name] = Entry(number)
         except FileNotFoundError:
             print("file not found")
         except OSError as err:
             print(f"could not load: {err}")
 
-    # --- Enkel parser/dispatcher ---
-    def handle(self, line: str) -> bool:
-        """Ta emot en textrad, kör rätt kommando, returnera False om vi ska avsluta.
-        Vi delar upp på whitespace, gör kommandon case-insensitive och skriver
-        begripliga fel vid fel antal argument.
-        """
+    # Denna funktion tar en textinmatning och avgör vilket kommando som ska köras
+    def handle_command(self, line: str) -> bool:
         line = line.strip()
         if not line:
-            return True  # tom rad gör ingenting
+            return True  # gör inget om raden är tom
 
-        p = line.split()
-        cmd, args = p[0].lower(), p[1:]
+        parts = line.split()  # dela upp texten på mellanslag
+        command = parts[0].lower()  # kommandon är inte skiftlägeskänsliga
+        args = parts[1:]  # resten är argument
 
-        if   cmd == "add":
-            (len(args)==2 and self.add(*args))    or print("usage: add name number")
-        elif cmd == "lookup":
-            (len(args)==1 and self.lookup(*args)) or print("usage: lookup name")
-        elif cmd == "alias":
-            (len(args)==2 and self.alias(*args))  or print("usage: alias name newname")
-        elif cmd == "change":
-            (len(args)==2 and self.change(*args)) or print("usage: change name number")
-        elif cmd == "save":
-            (len(args)==1 and self.save(*args))   or print("usage: save filename")
-        elif cmd == "load":
-            (len(args)==1 and self.load(*args))   or print("usage: load filename")
-        elif cmd == "quit":
-            return False
+        # Här kollar vi vilket kommando det är och kör rätt funktion
+        if command == "add":
+            if len(args) == 2:
+                self.add(args[0], args[1])
+            else:
+                print("usage: add name number")
+        elif command == "lookup":
+            if len(args) == 1:
+                self.lookup(args[0])
+            else:
+                print("usage: lookup name")
+        elif command == "alias":
+            if len(args) == 2:
+                self.alias(args[0], args[1])
+            else:
+                print("usage: alias name newname")
+        elif command == "change":
+            if len(args) == 2:
+                self.change(args[0], args[1])
+            else:
+                print("usage: change name number")
+        elif command == "save":
+            if len(args) == 1:
+                self.save(args[0])
+            else:
+                print("usage: save filename")
+        elif command == "load":
+            if len(args) == 1:
+                self.load(args[0])
+            else:
+                print("usage: load filename")
+        elif command == "quit":
+            return False  # avsluta programmet
         else:
             print("unknown command")
-        return True
+        return True  # fortsätt köra
 
-# --- REPL (Read–Eval–Print Loop) ---
-# En liten loop som skriver prompt, läser en rad, kör kommandot och upprepar.
 
-def repl() -> None:
-    pb = PhoneBook()
+# Programloopen – körs tills användaren skriver "quit"
+def repl():
+    book = PhoneBook()
     while True:
         try:
             print(PROMPT, end="", flush=True)
-            line = input()
+            line = input()  # läs en rad från användaren
         except EOFError:
-            break  # t.ex. Ctrl-D
-        if not pb.handle(line):
+            break  # avsluta om användaren trycker Ctrl-D
+
+        # Hantera kommandot. False betyder att användaren skrev "quit".
+        if not book.handle_command(line):
             break
+
 
 if __name__ == "__main__":
     repl()
