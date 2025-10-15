@@ -1,22 +1,3 @@
-"""
-Telefonbok – enkel, nybörjarvänlig och i linje med labb 4:s kodstilsguidelines.
-
-Viktigt ur guidelines:
-- Väl kommenterad kod och tydlig struktur (separata funktioner/klasser).
-- **Inga globala variabler**: ingen modulnivå‑state används (prompten skickas in).
-- Informationsflöde via parametrar/returvärden och uppdatering av datastrukturer.
-- Felmeddelanden skrivs av programmet (inte Python‑crash), enligt specifikationen.
-- Ingen användning av `else` på `for`/`while` (ingår ej i kursen).
-
-Kommandon:
-  add name number      – lägg till nytt namn (namn och nummer måste vara unika)
-  lookup name          – visa numret för ett namn eller alias
-  alias name newname   – gör nytt namn som pekar på samma nummer
-  change name number   – byt nummer (påverkar alla alias)
-  save filename        – spara till fil (en rad per namn: "nummer;namn;")
-  load filename        – läs från fil (alias försvinner enligt uppgiften)
-  quit                 – avsluta programmet
-"""
 
 from typing import Optional
 
