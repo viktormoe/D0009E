@@ -17,19 +17,19 @@ class PhoneBook:
 
     # Hjälpfunktion: kolla om ett nummer redan används av någon annan Entry
     def number_in_use(self, my_entry: Optional[Entry], number: str) -> bool:
-        """
-        Returnerar True om telefonnumret redan används av någon annan Entry.
-        my_entry används för att hoppa över aktuell post vid t.ex. 'change'.
-        """
+        
+        # Returnerar True om telefonnumret redan används av någon annan Entry.
+        # my_entry används för att hoppa över aktuell post vid t.ex. 'change'.
+        
         for entry in self.names.values():
             if entry is not my_entry and entry.number == number:
                 return True
         return False
 
-    # ---------------- Kommandon ----------------
+    # Kommandon
 
     def add(self, name: str, number: str) -> None:
-        """Lägg till nytt namn. Fel om namnet finns eller numret redan används."""
+        # Lägg till nytt namn. Fel om namnet finns eller numret redan används.
         if name in self.names:
             print(f"{name} already exists")
             return
@@ -46,7 +46,7 @@ class PhoneBook:
             print(entry.number)
 
     def alias(self, name: str, newname: str) -> None:
-        """Skapa alias: låt `newname` peka på samma Entry som `name`."""
+        # Skapa alias: låt `newname` peka på samma Entry som `name`.
         entry = self.names.get(name)
         if entry is None or newname in self.names:
             print("name not found or duplicate name")
@@ -64,7 +64,7 @@ class PhoneBook:
         entry.number = number  # ändra numret, alias följer automatiskt
 
     def save(self, filename: str) -> None:
-        """Spara alla namn (även alias) som separata rader: "nummer;namn;"."""
+        # Spara alla namn (även alias) som separata rader: "nummer;namn;".
         try:
             with open(filename, "w", encoding="utf-8") as file:
                 for name, entry in self.names.items():
@@ -73,7 +73,7 @@ class PhoneBook:
             print(f"could not save: {err}")
 
     def load(self, filename: str) -> None:
-        """Läs fil och ersätt telefonboken. Varje rad blir en separat Entry (alias försvinner)."""
+        # Läs fil och ersätt telefonboken. Varje rad blir en separat Entry (alias försvinner).
         try:
             with open(filename, "r", encoding="utf-8") as file:
                 self.names.clear()
@@ -141,9 +141,8 @@ class PhoneBook:
 
 
 # Programloopen – körs tills användaren skriver "quit"
-# Notera: ingen global prompt – den skickas in som parameter → följer guidelines.
 
-def repl(prompt: str = "phoneBook> ") -> None:
+def repl(prompt: str = "phoneBook> "):
     book = PhoneBook()
     while True:
         try:
@@ -157,8 +156,7 @@ def repl(prompt: str = "phoneBook> ") -> None:
             break
 
 
-def main() -> None:
-    # Allt körs via funktioner; ingen global state. Lätt att testa.
+def main():
     repl("phoneBook> ")
 
 
