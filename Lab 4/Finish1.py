@@ -9,16 +9,17 @@ class Entry:
 # Klassen som sköter själva telefonboken
 class PhoneBook:
     def __init__(self):
-        # Flera namn kan peka på samma Entry = alias.
+        # Flera namn kan peka på samma Entry
         self.names = {}
 
-    # Hjälpfunktion: kolla om ett nummer redan används av någon annan Entry
+    # Hjälpfunktion: kolla om ett nummer redan används av någon annan
     def number_in_use(self, my_entry, number):
-        # Returnerar True om telefonnumret redan används av någon annan Entry.
+        # Returnerar True om telefonnumret redan används av någon annan
         for entry in self.names.values():
             if entry is not my_entry and entry.number == number:
                 return True
         return False
+
 
     # Kommandon
 
@@ -69,7 +70,7 @@ class PhoneBook:
     def load(self, filename):
         # Load, Ersätt telefonboken. Varje rad blir en separat Entry
         try:
-            with open(filename, "r", encoding="utf-8") as file:
+            with open(filename, "r") as file:
                 self.names.clear()
                 line_no = 0
                 for line in file:
@@ -151,7 +152,6 @@ def repl(prompt = "phoneBook> "):
 
 
 def main():
-    # All körning sker via funktioner
     repl("phoneBook> ")
 
 
