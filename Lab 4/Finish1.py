@@ -64,7 +64,7 @@ class PhoneBook:
         try:
             with open(filename, "w", encoding="utf-8") as file:
                 for name, entry in self.names.items():
-                    file.write(f"{entry.number};{name};")  # viktigt: radbrytning
+                    file.write(f"{entry.number};{name};\n")  # viktigt: radbrytning
         except OSError as err:
             print(f"could not save: {err}")
 
