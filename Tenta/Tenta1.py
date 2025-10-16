@@ -1,10 +1,2 @@
-def count_a(s):
-    antal_a = 0
-    for x in s:
-        if x == "a":
-            antal_a += 1
-    print(antal_a)
-
-
-count_a("banan")
-          
+i=int(1+float(str(int("3")+1)+"0")+4)
+print(i)
