@@ -1,0 +1,16 @@
+START
+ └── __main__  → repl("phoneBook>")
+       ├── Skapar PhoneBook
+       ├── while True:
+       │     ├── Läs kommando (input)
+       │     ├── Tolka ord (split)
+       │     ├── if cmd == "add" → PhoneBook.add()
+       │     ├── elif cmd == "lookup" → PhoneBook.lookup()
+       │     ├── elif cmd == "alias" → PhoneBook.alias()
+       │     ├── elif cmd == "change" → PhoneBook.change()
+       │     ├── elif cmd == "save" → PhoneBook.save()
+       │     ├── elif cmd == "load" → PhoneBook.load()
+       │     ├── elif cmd == "quit" → break
+       │     └── else → skriv "unknown command"
+       │
+       └── (efter varje kommando) visa prompt igen

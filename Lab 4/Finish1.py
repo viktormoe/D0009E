@@ -3,20 +3,18 @@
 # Om flera namn pekar på samma Entry-objekt fungerar de som alias.
 class Entry:
     def __init__(self, number):
-        self.number = number  # telefonnummer lagras som text (sträng)
+        self.number = number
 
 
-# Klassen som sköter själva telefonboken (datastrukturen och kommandona)
+# Klassen som sköter själva telefonboken
 class PhoneBook:
     def __init__(self):
-        # Dictionary där varje namn pekar på en Entry (som innehåller numret)
-        # Flera namn kan peka på samma Entry → alias.
+        # Flera namn kan peka på samma Entry = alias.
         self.names = {}
 
     # Hjälpfunktion: kolla om ett nummer redan används av någon annan Entry
     def number_in_use(self, my_entry, number):
         # Returnerar True om telefonnumret redan används av någon annan Entry.
-        # my_entry används för att hoppa över aktuell post vid t.ex. 'change'.
         for entry in self.names.values():
             if entry is not my_entry and entry.number == number:
                 return True
@@ -42,7 +40,7 @@ class PhoneBook:
             print(entry.number)
 
     def alias(self, name, newname):
-        # Skapa alias: låt `newname` peka på samma Entry som `name`.
+        # Skapa alias. newname pekar på name
         entry = self.names.get(name)
         if entry is None or newname in self.names:
             print("name not found or duplicate name")
@@ -60,16 +58,16 @@ class PhoneBook:
         entry.number = number  # ändra numret, alias följer automatiskt
 
     def save(self, filename):
-        # Spara alla namn (även alias) som separata rader: "nummer;namn;".
+        # Spara alla namn och alias som separata rader
         try:
             with open(filename, "w", encoding="utf-8") as file:
                 for name, entry in self.names.items():
-                    file.write(f"{entry.number};{name};\n")  # viktigt: radbrytning
+                    file.write(f"{entry.number};{name};\n")
         except OSError as err:
             print(f"could not save: {err}")
 
     def load(self, filename):
-        # Läs fil och ersätt telefonboken. Varje rad blir en separat Entry (alias försvinner).
+        # Load, Ersätt telefonboken. Varje rad blir en separat Entry
         try:
             with open(filename, "r", encoding="utf-8") as file:
                 self.names.clear()
@@ -80,8 +78,7 @@ class PhoneBook:
                     if not line:
                         continue
                     parts = line.split(";")
-                    if len(parts) < 2 or not parts[0] or not parts[1]:
-                        # Välj: skriv ett enkelt felmeddelande för trasig rad men fortsätt
+                    if len(parts) < 2 or not parts[0] or not parts[1]: # Kollar trasiga rader
                         print(f"bad line {line_no}: {line}")
                         continue
                     number, name = parts[0], parts[1]
@@ -91,17 +88,16 @@ class PhoneBook:
         except OSError as err:
             print(f"could not load: {err}")
 
-    # Denna funktion tar en textinmatning och avgör vilket kommando som ska köras
+    # Denna funktion tar en textinmatning kör de olika kommandorna
     def handle_command(self, line):
         line = line.strip()
         if not line:
-            return True  # gör inget om raden är tom
+            return True # gör inget om raden är tom
 
-        parts = line.split()               # dela upp texten på mellanslag
-        command = parts[0].lower()         # kommandon är inte skiftlägeskänsliga
-        args = parts[1:]                   # resten är argument
+        parts = line.split() # dela upp texten på mellanslag
+        command = parts[0].lower() # kommandon är inte skiftlägeskänsliga
+        args = parts[1:] # resten är argument
 
-        # Välj och kör rätt kommando + skriv ut tydliga usage-texter vid fel antal argument
         if command == "add":
             if len(args) == 2:
                 self.add(args[0], args[1])
@@ -139,8 +135,6 @@ class PhoneBook:
         return True  # fortsätt köra
 
 
-# Programloopen – körs tills användaren skriver "quit"
-# Prompten skickas in som parameter (ingen global state)
 
 def repl(prompt = "phoneBook> "):
     book = PhoneBook()
@@ -157,7 +151,7 @@ def repl(prompt = "phoneBook> "):
 
 
 def main():
-    # All körning sker via funktioner – bättre struktur och lättare att testa
+    # All körning sker via funktioner
     repl("phoneBook> ")
 
 
