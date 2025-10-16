@@ -1,69 +1,84 @@
-
 # En liten klass som håller ett telefonnummer.
 # Om flera namn pekar på samma Entry-objekt fungerar de som alias.
 class Entry:
-    def __init__(self, number):
-        self.number = number
+    def __init__(self, name):
+        self.names = {name}  # håller alla namn (alias) för detta nummer
 
 
 # Klassen som sköter själva telefonboken
 class PhoneBook:
     def __init__(self):
         # Flera namn kan peka på samma Entry
-        self.names = {}
+        self.numbers = {}  # number -> Entry
 
     # Hjälpfunktion: kolla om ett nummer redan används av någon annan
     def number_in_use(self, my_entry, number):
         # Returnerar True om telefonnumret redan används av någon annan
-        for entry in self.names.values():
-            if entry is not my_entry and entry.number == number:
-                return True
-        return False
-
+        entry = self.numbers.get(number)
+        return entry is not None and entry is not my_entry
 
     # Kommandon
 
     def add(self, name, number):
         # Lägg till nytt namn. Fel om namnet finns eller numret redan används.
-        if name in self.names:
-            print(f"{name} already exists")
-            return
-        if self.number_in_use(None, number):
+        # kolla om namnet redan finns på något nummer
+        for e in self.numbers.values():
+            if name in e.names:
+                print(f"{name} already exists")
+                return
+        if number in self.numbers:
             print(f"{number} already exists")
             return
-        self.names[name] = Entry(number)
+        self.numbers[number] = Entry(name)
 
     def lookup(self, name):
-        entry = self.names.get(name)
-        if entry is None:
-            print(f"{name} not found")
-        else:
-            print(entry.number)
+        # hitta numret (key) där detta namn finns
+        for number, entry in self.numbers.items():
+            if name in entry.names:
+                print(number)
+                return
+        print(f"{name} not found")
 
     def alias(self, name, newname):
         # Skapa alias. newname pekar på name
-        entry = self.names.get(name)
-        if entry is None or newname in self.names:
+        # hitta entry för 'name'
+        target_entry = None
+        for entry in self.numbers.values():
+            if name in entry.names:
+                target_entry = entry
+            if newname in entry.names:
+                print("name not found or duplicate name")
+                return
+        if target_entry is None:
             print("name not found or duplicate name")
             return
-        self.names[newname] = entry  # båda namnen pekar nu på samma Entry/nummer
+        target_entry.names.add(newname)  # båda namnen pekar nu på samma Entry/nummer
 
     def change(self, name, number):
-        entry = self.names.get(name)
+        # hitta entry + gammalt nummer (key) för 'name'
+        old_number = None
+        entry = None
+        for num, e in self.numbers.items():
+            if name in e.names:
+                old_number, entry = num, e
+                break
         if entry is None:
             print(f"{name} not found")
             return
         if self.number_in_use(entry, number):
             print(f"{number} already exists")
             return
-        entry.number = number  # ändra numret, alias följer automatiskt
+        # flytta entry till nytt nummer (key)
+        del self.numbers[old_number]
+        self.numbers[number] = entry  # ändra numret, alias följer automatiskt
 
     def save(self, filename):
         # Spara alla namn och alias som separata rader
         try:
             with open(filename, "w", encoding="utf-8") as file:
-                for name, entry in self.names.items():
-                    file.write(f"{entry.number};{name};\n")
+                for number, entry in self.numbers.items():
+                    for name in entry.names:
+                        file.write(f"{number};{name};\n")
         except OSError as err:
             print(f"could not save: {err}")
 
@@ -71,7 +86,7 @@ class PhoneBook:
         # Load, Ersätt telefonboken. Varje rad blir en separat Entry
         try:
             with open(filename, "r") as file:
-                self.names.clear()
+                self.numbers.clear()
                 line_no = 0
                 for line in file:
                     line_no += 1
@@ -83,7 +98,14 @@ class PhoneBook:
                         print(f"bad line {line_no}: {line}")
                         continue
                     number, name = parts[0], parts[1]
-                    self.names[name] = Entry(number)
+                    # skapa eller uppdatera entry för detta nummer
+                    entry = self.numbers.get(number)
+                    if entry is None:
+                        entry = Entry(name)
+                        self.numbers[number] = entry
+                    else:
+                        entry.names.add(name)
+
         except FileNotFoundError:
             print("file not found")
         except OSError as err:
