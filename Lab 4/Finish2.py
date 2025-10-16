@@ -2,15 +2,15 @@
 # En liten klass som håller ett telefonnummer.
 # Om flera namn pekar på samma Entry-objekt fungerar de som alias.
 class Entry:
-    def __init__(self, number):
-        self.number = number
+    def __init__(self, name):
+        self.name = name
 
 
 # Klassen som sköter själva telefonboken
 class PhoneBook:
     def __init__(self):
         # Flera namn kan peka på samma Entry
-        self.names = {}
+        self.numbers = {}
 
     # Hjälpfunktion: kolla om ett nummer redan används av någon annan
     def number_in_use(self, my_entry, number):
